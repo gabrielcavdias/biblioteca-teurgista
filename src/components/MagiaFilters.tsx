@@ -1,18 +1,22 @@
 import React from 'react';
-import MyContext from '../context/MyContext';
-import { debounce } from '../helpers/functions';
+import { FilterContext } from '../context/FilterContext';
+import { GlobalContext } from '../context/GlobalContext';
 import { Spellbook } from '../helpers/Spellbook';
+import DescritorDropdown from './DescritorDropdown';
+import OrdenationDropdown from './OrdenationDropown';
 
 const MagiaFilters = () => {
-    const { setSpellList }: any = React.useContext(MyContext);
-    const [textContent, setTextContent] = React.useState('');
+    const { spellList, setSpellList }: any = React.useContext(GlobalContext);
+    const { textContent, setTextContent }: any =
+        React.useContext(FilterContext);
+    const [filterOpen, setFilterOpen] = React.useState(false);
 
     React.useEffect(() => {
         if (textContent == '') {
             setSpellList(Spellbook.getAllSpells());
             return;
         }
-        setSpellList(Spellbook.getFilteredSpells(textContent));
+        setSpellList(Spellbook.getFilteredSpells(spellList, textContent));
     }, [textContent]);
     return (
         <div className="max-w-2xl">
@@ -26,10 +30,21 @@ const MagiaFilters = () => {
                 onChange={(event: any) => setTextContent(event.target.value)}
             />
             <div className="flex justify-end pt-2">
-                <button className="bg-gray-50 py-1 px-3 rounded-full font-bold">
+                <button
+                    className="bg-gray-50 py-1 px-3 rounded-full font-bold"
+                    onClick={() => setFilterOpen(!filterOpen)}
+                >
                     Filtrar
                 </button>
             </div>
+            {filterOpen ? (
+                <div className="flex gap-6">
+                    <OrdenationDropdown />
+                    <DescritorDropdown />
+                </div>
+            ) : (
+                'Fechado'
+            )}
         </div>
     );
 };

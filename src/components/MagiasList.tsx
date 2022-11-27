@@ -1,10 +1,10 @@
 import React from 'react';
-import MyContext from '../context/MyContext';
+import { GlobalContext } from '../context/GlobalContext';
 import { Spell } from '../helpers/types';
 import MagiaItem from './MagiaItem';
 
 const MagiasList = () => {
-    const { spellList }: any = React.useContext(MyContext);
+    const { spellList }: any = React.useContext(GlobalContext);
     return (
         <section
             aria-labelledby="magias__title"

@@ -17,6 +17,9 @@ export type Spell = {
     descricao: string;
 };
 
+export type Descritor = {
+    nome: string;
+};
 export type State = {
     currentMagiaID: number;
     setCurrentMagiaID: Function;

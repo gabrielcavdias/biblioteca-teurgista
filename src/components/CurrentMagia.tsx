@@ -1,11 +1,11 @@
 import React from 'react';
-import MyContext from '../context/MyContext';
+import { GlobalContext } from '../context/GlobalContext';
 import { Spell } from '../helpers/types';
-import { strCapitalize } from '../helpers/functions';
+import { getDescritorName, strCapitalize } from '../helpers/functions';
 import { Spellbook } from '../helpers/Spellbook';
 
 const CurrentMagia = () => {
-    const { currentMagiaID }: any = React.useContext(MyContext);
+    const { currentMagiaID }: any = React.useContext(GlobalContext);
     const currentMagia: any = Spellbook.getAllSpells().find(
         (spell: Spell) => spell.id == currentMagiaID
     );
@@ -30,10 +30,12 @@ const CurrentMagia = () => {
                         {(currentMagia.origem == 'arcana'
                             ? currentMagia.nivel_arcana
                             : currentMagia.nivel_divina) + ' '}
-                        (
+                        ({' '}
                         {currentMagia.descritores.map(
                             (desc: { slug: string }) => (
-                                <span key={Math.random()}>{desc.slug}</span>
+                                <span key={Math.random()}>
+                                    {getDescritorName(desc.slug)}{' '}
+                                </span>
                             )
                         )}
                         )
@@ -72,10 +74,12 @@ const CurrentMagia = () => {
                     <li
                         className="mt-2"
                         dangerouslySetInnerHTML={{
-                            __html: currentMagia.descricao.replace(
-                                /[Cc][Oo][Mm][Pp][Oo][Nn][Ee][Nn][Tt][Ee] [Mm][Aa][Tt][Ee][Rr][Ii][Aa][Ll]:/,
-                                "<br><br><span class='font-bold'>Componente Material:</span>"
-                            ),
+                            __html: currentMagia.descricao
+                                .replace(
+                                    /[Cc][Oo][Mm][Pp][Oo][Nn][Ee][Nn][Tt][Ee] [Mm][Aa][Tt][Ee][Rr][Ii][Aa][Ll]:/,
+                                    "<br><br><span class='font-bold'>Componente Material:</span>"
+                                )
+                                .replace(/[0-9][)]/),
                         }}
                     />
                 </ul>

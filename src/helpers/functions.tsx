@@ -4,32 +4,58 @@ import { Spell } from './types';
  * @returns Spell list spliting "ambos" magias into "divina" and "arcana"
  */
 export function splitSpells(magias: Spell[]) {
-    let arcaneSpells: Spell[] = magias
-        .filter((magia) => magia.origem == 'arcana' || magia.origem == 'ambos')
+    let arcaneSpells: Spell[] = splitSpellsByOrigem(magias, 'arcana');
+    let divineSpells: Spell[] = splitSpellsByOrigem(magias, 'divina', 1000);
+    return sortSpellsFinal([...arcaneSpells, ...divineSpells]);
+}
+
+/**
+ * @param magias
+ * @returns Only spell of the chosen "origem" or null
+ */
+function splitSpellsByOrigem(
+    magias: Spell[],
+    origem: string,
+    change: number = 0
+) {
+    return magias
+        .filter((magia) => magia.origem == origem || magia.origem == 'ambos')
         .map((spell) => {
-            return { ...spell, origem: 'arcana' };
-        });
-    let divineSpells: Spell[] = magias
-        .filter((magia) => magia.origem == 'divina' || magia.origem == 'ambos')
-        .map((spell) => {
-            let divine = {
+            let magicSpell = {
                 ...spell,
             };
-            if (divine.origem == 'ambos') {
-                divine = { ...divine, id: divine.id + 1000 };
+            if (magicSpell.origem == 'ambos' && change != 0) {
+                magicSpell = { ...magicSpell, id: magicSpell.id + change };
             }
-            divine = { ...divine, origem: 'divina' };
-            return divine;
+            magicSpell = { ...magicSpell, origem: origem };
+            return magicSpell;
         });
-    return [...arcaneSpells, ...divineSpells].sort((a, b) => {
+}
+
+/**
+ * @param magias
+ * @returns Spells sorted by the appropriate level
+ */
+export function sortSpellsByNivel(magias: Spell[]) {
+    return magias.sort((a, b) => {
         let a_level: any =
             a.origem == 'divina' ? a.nivel_divina : a.nivel_arcana;
         let b_level: any =
             b.origem == 'divina' ? b.nivel_divina : b.nivel_arcana;
         return a_level > b_level ? 1 : b_level > a_level ? -1 : 0;
-        // return a.nome > b.nome ? 1 : b.nome > a.nome ? -1 : 0
     });
 }
+
+/**
+ * @param magias
+ * @returns Spells sorted by name
+ */
+export function sortSpellsByNome(magias: Spell[]) {
+    return magias.sort((a, b) =>
+        a.nome > b.nome ? 1 : b.nome > a.nome ? -1 : 0
+    );
+}
+
 /**
  * @param magia
  * @returns The proper level wheter the spell is "divina" or "arcana"
@@ -84,13 +110,46 @@ export function getDescritorIcon(slug: string) {
             : descritorIcon;
     return <i className={descritorIcon}></i>;
 }
-
-export function debounce(func: Function, wait: number) {
-    let timeout: any;
-    return () => {
-        clearTimeout(timeout);
-        timeout = setTimeout(func, wait);
+/**
+ * @param slug
+ * @returns Fine name, for example: abjuracao => Abjuração
+ */
+export function getDescritorName(slug: string) {
+    const fineNames: any = {
+        cura: 'Cura',
+        frio: 'Frio',
+        encantamento: 'Encantamento',
+        // ERRO \/
+        encantamentos: 'Encantamento',
+        //
+        adivinhacao: 'Adivinhação',
+        // ERRO \/
+        advinhacao: 'Adivinhação',
+        //
+        abjuracao: 'Abjuração',
+        invocacao: 'Invocação',
+        necromancia: 'Necromância',
+        terra: 'Terra',
+        ilusao: 'Ilusão',
+        agua: 'Água',
+        sonico: 'Sônico',
+        gelo: 'Gelo',
+        transmutacao: 'Transmutação',
+        ar: 'Ar',
+        eletricidade: 'Eletricidade',
+        fogo: 'Fogo',
+        medo: 'Medo',
+        escuridao: 'Escuridão',
+        caos: 'Caos',
+        ordem: 'Ordem',
+        tempo: 'Tempo',
+        luz: 'Luz',
+        essencia: 'Essência',
+        bem: 'Bem',
+        mal: 'Mal',
+        acido: 'Ácido',
     };
+    return fineNames[slug];
 }
 
 // String
@@ -101,4 +160,19 @@ export function debounce(func: Function, wait: number) {
  */
 export function strCapitalize(str: string) {
     return str[0].toUpperCase() + str.slice(1).toLowerCase();
+}
+
+/**
+ *
+ * @param magias
+ * @returns Spells sorted by nivel and then by nome per nivel
+ */
+function sortSpellsFinal(magias: Spell[]) {
+    let allSpells: Spell[] = [];
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].forEach((level) => {
+        let spellList = magias.filter((magia) => getSpellNivel(magia) == level);
+        sortSpellsByNome(spellList);
+        allSpells = [...allSpells, ...spellList];
+    });
+    return allSpells;
 }

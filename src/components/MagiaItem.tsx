@@ -2,14 +2,14 @@ import React from 'react';
 import { getDescritorIcon, getSpellNivel } from '../helpers/functions';
 import { Spell } from '../helpers/types';
 import { Link } from 'react-router-dom';
-import MyContext from '../context/MyContext';
+import { GlobalContext } from '../context/GlobalContext';
 type MagiasItemProps = {
     magia: Spell;
 };
 
 const MagiaItem = ({ magia }: MagiasItemProps) => {
     const { currentMagiaID, setCurrentMagiaID }: any =
-        React.useContext(MyContext);
+        React.useContext(GlobalContext);
 
     let magiaIcon =
         magia.origem == 'divina'
