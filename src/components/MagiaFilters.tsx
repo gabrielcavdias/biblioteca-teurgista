@@ -10,13 +10,10 @@ const MagiaFilters = () => {
     const { textContent, setTextContent }: any =
         React.useContext(FilterContext);
     const [filterOpen, setFilterOpen] = React.useState(false);
+    const { handleFilterChange }: any = React.useContext(FilterContext);
 
     React.useEffect(() => {
-        if (textContent == '') {
-            setSpellList(Spellbook.getAllSpells());
-            return;
-        }
-        setSpellList(Spellbook.getFilteredSpells(spellList, textContent));
+        handleFilterChange();
     }, [textContent]);
     return (
         <div className="max-w-2xl">

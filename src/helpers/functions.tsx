@@ -152,16 +152,6 @@ export function getDescritorName(slug: string) {
     return fineNames[slug];
 }
 
-// String
-/**
- *
- * @param str
- * @returns 'sOmE StriNg' ==> 'Some string'
- */
-export function strCapitalize(str: string) {
-    return str[0].toUpperCase() + str.slice(1).toLowerCase();
-}
-
 /**
  *
  * @param magias
@@ -175,4 +165,26 @@ function sortSpellsFinal(magias: Spell[]) {
         allSpells = [...allSpells, ...spellList];
     });
     return allSpells;
+}
+
+// String
+/**
+ *
+ * @param str
+ * @returns 'sOmE StriNg' ==> 'Some string'
+ */
+export function strCapitalize(str: string) {
+    return str[0].toUpperCase() + str.slice(1).toLowerCase();
+}
+
+//  Normalize
+/**
+ * @param str
+ * @returns normalize string, for example: Abjuração => abjuracao
+ */
+export function normalize(str: string) {
+    return str
+        .normalize('NFD')
+        .replace(/[^a-zA-Z\s]/g, '')
+        .toLowerCase();
 }

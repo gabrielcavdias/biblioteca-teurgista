@@ -6,5 +6,9 @@
     margin-inline: auto;
 }
 .text-glow:hover {
-    text-shadow: 0 0 3px #fff;
+    text-shadow: 0 0 3px rgb(241, 227, 227);
+}
+
+.text-glow-purple:hover {
+    text-shadow: 0 0 5px #9148ee;
 }

@@ -16,7 +16,7 @@ const MagiasList = () => {
             >
                 Magias
             </h2>
-            <div className="max-h-screen overflow-auto py-2">
+            <div className="max-h-72 overflow-y-auto py-2 md:max-h-screen">
                 <ul className="grid gap-2 content-center mt-4 w-full">
                     {spellList.map((magia: Spell, index: number) => (
                         <MagiaItem key={index} magia={magia} />

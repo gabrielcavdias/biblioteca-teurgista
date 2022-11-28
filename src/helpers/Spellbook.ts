@@ -5,6 +5,7 @@ import {
     sortSpellsByNome,
     sortSpellsByNivel,
     getDescritorName,
+    normalize,
 } from './functions';
 
 export class Spellbook {
@@ -17,11 +18,11 @@ export class Spellbook {
         return splitSpells(this.spells);
     }
 
-    static getFilteredSpells(magias: Spell[], term: string) {
-        return magias.filter(
+    static getFilteredSpells(term: string) {
+        return this.getAllSpells().filter(
             (spell) =>
-                spell.descricao.toLowerCase().includes(term.toLowerCase()) ||
-                spell.nome.toLowerCase().includes(term.toLowerCase())
+                normalize(spell.descricao).includes(normalize(term)) ||
+                normalize(spell.nome).includes(normalize(term))
         );
     }
 

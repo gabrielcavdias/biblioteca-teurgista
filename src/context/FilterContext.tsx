@@ -12,7 +12,9 @@ export const FilterStorage = ({ children }: { children: any }) => {
     const { spellList, setSpellList }: any = useContext(GlobalContext);
     const handleFilterChange = () => {
         let magias = Spellbook.getAllSpells();
-        magias = Spellbook.getFilteredSpells(magias, textContent);
+        if (textContent !== '') {
+            magias = Spellbook.getFilteredSpells(textContent);
+        }
         magias =
             currentOrdenation == 'Por nome'
                 ? Spellbook.orderSpellsByName(magias)

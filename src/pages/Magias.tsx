@@ -9,7 +9,7 @@ const Magias = () => {
             <FilterStorage>
                 <MagiaFilters />
             </FilterStorage>
-            <div className="grid gap-4 grid-cols-2">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
                 <MagiasList />
                 <CurrentMagia />
             </div>

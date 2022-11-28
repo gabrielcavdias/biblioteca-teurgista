@@ -13,6 +13,10 @@ module.exports = {
             spacing: {
                 large: '30rem',
             },
+            fontFamily: {
+                cursive: ['Patrick Hand', 'cursive'],
+                sans: ['Roboto', 'sans-serif'],
+            },
         },
     },
     plugins: [],

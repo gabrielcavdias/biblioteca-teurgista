@@ -20,6 +20,15 @@ export type Spell = {
 export type Descritor = {
     nome: string;
 };
+export type SpellSlot = {
+    spellId: number;
+    isMemorized: boolean;
+    memorizedCount: number;
+};
+export type TCharacter = {
+    name: string;
+    spells: SpellSlot[];
+};
 export type State = {
     currentMagiaID: number;
     setCurrentMagiaID: Function;

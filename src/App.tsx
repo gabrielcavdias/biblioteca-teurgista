@@ -6,6 +6,7 @@ import './App.css';
 import { GlobalStorage } from './context/GlobalContext';
 import Footer from './components/Footer';
 import { Spellbook } from './helpers/Spellbook';
+import MagiaSingle from './pages/MagiaSingle';
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<Magias />} />
                         <Route path="personagens" element={<Personagens />} />
+                        <Route path="magias/:id" element={<MagiaSingle />} />
                     </Routes>
                     <Footer />
                 </BrowserRouter>
