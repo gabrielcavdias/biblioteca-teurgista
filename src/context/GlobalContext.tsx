@@ -9,6 +9,11 @@ export const GlobalStorage = ({ children }: { children: any }) => {
     const [spellList, setSpellList] = useState<Spell[]>(
         Spellbook.getAllSpells()
     );
+    const [characters, setCharacters] = useState(() => {
+        let localCharacters = window.localStorage.getItem('personagens');
+        return localCharacters ? JSON.parse(localCharacters) : [];
+    });
+
     return (
         <GlobalContext.Provider
             value={{
@@ -16,6 +21,8 @@ export const GlobalStorage = ({ children }: { children: any }) => {
                 setCurrentMagiaID,
                 spellList,
                 setSpellList,
+                characters,
+                setCharacters,
             }}
         >
             {children}

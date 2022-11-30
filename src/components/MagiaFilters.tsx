@@ -28,7 +28,7 @@ const MagiaFilters = () => {
             />
             <div className="flex justify-end pt-2">
                 <button
-                    className="bg-gray-50 py-1 px-3 rounded-full font-bold"
+                    className="bg-gray-50 py-1 px-3 rounded-full font-bold text-black"
                     onClick={() => setFilterOpen(!filterOpen)}
                 >
                     Filtrar

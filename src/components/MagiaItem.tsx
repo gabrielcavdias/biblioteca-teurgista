@@ -1,6 +1,6 @@
 import React from 'react';
 import { getDescritorIcon, getSpellNivel } from '../helpers/functions';
-import { Spell } from '../helpers/types';
+import { Spell, SpellSlot, TCharacter } from '../helpers/types';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../context/GlobalContext';
 type MagiasItemProps = {
@@ -10,6 +10,7 @@ type MagiasItemProps = {
 const MagiaItem = ({ magia }: MagiasItemProps) => {
     const { currentMagiaID, setCurrentMagiaID }: any =
         React.useContext(GlobalContext);
+    const { characters, setCharacters }: any = React.useContext(GlobalContext);
 
     let magiaIcon =
         magia.origem == 'divina'
@@ -20,6 +21,30 @@ const MagiaItem = ({ magia }: MagiasItemProps) => {
         currentMagiaID == magia.id
             ? 'bg-brand-purple-dark/40 text-yellow-300/90 outline outline-2 outline-brand-purple-light'
             : 'bg-brand-gray-light';
+
+    const handleAddMagia = (id: number) => {
+        if (characters.length == 1) {
+            let character = characters[0];
+            let isSpellinGrimoire = character.spells
+                .map((spell: SpellSlot) => spell.spellId)
+                .includes(id);
+
+            if (!isSpellinGrimoire) {
+                character.spells.push({
+                    spellId: id,
+                    isMemorized: false,
+                    memorizedCount: 0,
+                });
+                setCharacters([...characters]);
+                window.alert(
+                    `${magia.nome} adicionado ao grimório do personagem ${character.name}`
+                );
+            }
+        }
+    };
+    React.useEffect(() => {
+        window.localStorage.setItem('personagens', JSON.stringify(characters));
+    }, [characters]);
     return (
         <li
             className="text-white flex max-w-full cursor-pointer md:mx-1"
@@ -38,9 +63,11 @@ const MagiaItem = ({ magia }: MagiasItemProps) => {
                     {magia.nome}
                 </span>
                 <span className="inline-flex gap-2 items-center text-2xl pl-2 text-white">
-                    <button>
-                        <i className={magiaIcon}></i>
-                    </button>
+                    {characters.length > 0 && (
+                        <button onClick={() => handleAddMagia(magia.id)}>
+                            <i className={magiaIcon}></i>
+                        </button>
+                    )}
                     <Link to={`magias/${magia.id}`} target="_blank">
                         <i className="fa-solid fa-arrow-up-right-from-square"></i>
                     </Link>

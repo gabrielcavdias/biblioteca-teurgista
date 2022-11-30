@@ -28,6 +28,7 @@ export type SpellSlot = {
 export type TCharacter = {
     name: string;
     spells: SpellSlot[];
+    id: number;
 };
 export type State = {
     currentMagiaID: number;

@@ -2,11 +2,15 @@ import { Spellbook } from './Spellbook';
 import { SpellSlot } from './types';
 
 export class Character {
+    public static lastID = 0;
+
     public name: string;
     // Fazer como protected
     public spells: SpellSlot[];
+    public id: number;
 
     constructor(name: string, spells: SpellSlot[]) {
+        this.id = ++Character.lastID;
         this.name = name;
         this.spells = spells;
     }
