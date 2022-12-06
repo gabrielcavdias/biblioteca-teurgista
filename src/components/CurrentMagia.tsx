@@ -79,6 +79,10 @@ const CurrentMagia = () => {
                                     /[Cc][Oo][Mm][Pp][Oo][Nn][Ee][Nn][Tt][Ee] [Mm][Aa][Tt][Ee][Rr][Ii][Aa][Ll]:/,
                                     "<br><br><span class='font-bold'>Componente Material:</span>"
                                 )
+                                .replace(
+                                    /[Cc][Uu][Ss][Tt][Oo] [Dd][Ee] [Xx][Pp]:/,
+                                    "<br><br><span class='font-bold'>Custo de XP:</span>"
+                                )
                                 .replace(/[0-9][)]/),
                         }}
                     />

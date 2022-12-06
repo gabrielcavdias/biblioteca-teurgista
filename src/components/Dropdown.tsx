@@ -4,27 +4,30 @@ import { GlobalContext } from '../context/GlobalContext';
 import { strCapitalize } from '../helpers/functions';
 import { Spellbook } from '../helpers/Spellbook';
 
-const DescritorDropdown = () => {
-    const { spellList, setSpellList }: any = React.useContext(GlobalContext);
+const Dropdown = ({
+    title,
+    options,
+    currentFilter,
+    setCurrentFilter,
+    capitalize,
+    size,
+}: any) => {
     const { handleFilterChange }: any = React.useContext(FilterContext);
-    const { currentDescritor, setcurrentDescritor }: any =
-        React.useContext(FilterContext);
-    // WHY??????????
-    const spellListClone = [...spellList];
-    // ????????????
 
     const [dropdownOpen, setDropDownOpen] = React.useState(false);
     React.useEffect(() => {
         handleFilterChange();
-    }, [currentDescritor]);
+    }, [currentFilter]);
     return (
         <div className="cursor-pointer">
-            <span className="text-sm text-gray-200">Descritor:</span>
+            <span className="text-sm text-gray-200">{title}:</span>
             <div
-                className="relative border-b border-gray-200 py-1 px-2 bg-brand-gray-lighter text-white flex justify-between w-36 items-center rounded"
+                className={`relative border-b border-gray-200 py-1 px-2 bg-brand-gray-lighter text-white flex justify-between items-center rounded ${
+                    size == 'large' ? 'w-48' : 'w-36'
+                }`}
                 onClick={() => setDropDownOpen(!dropdownOpen)}
             >
-                {strCapitalize(currentDescritor)}{' '}
+                {capitalize ? strCapitalize(currentFilter) : currentFilter}{' '}
                 <i
                     className={`fa-solid fa-chevron-down ${
                         dropdownOpen ? 'rotate-180' : ''
@@ -35,13 +38,15 @@ const DescritorDropdown = () => {
                         dropdownOpen ? 'block' : 'hidden'
                     }`}
                 >
-                    {Spellbook.descritores.map((ordenationName) => (
+                    {options.map((optionName: string) => (
                         <li
                             key={Math.random()}
-                            onClick={() => setcurrentDescritor(ordenationName)}
+                            onClick={() => setCurrentFilter(optionName)}
                             className="pl-2 py-3 border-b cursor-pointer border-gray-500 hover:bg-purple-900"
                         >
-                            {strCapitalize(ordenationName)}
+                            {capitalize
+                                ? strCapitalize(optionName)
+                                : optionName}
                         </li>
                     ))}
                 </ul>
@@ -50,4 +55,4 @@ const DescritorDropdown = () => {
     );
 };
 
-export default DescritorDropdown;
+export default Dropdown;

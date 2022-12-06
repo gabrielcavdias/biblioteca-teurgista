@@ -18,8 +18,8 @@ export class Spellbook {
         return splitSpells(this.spells);
     }
 
-    static getFilteredSpells(term: string) {
-        return this.getAllSpells().filter(
+    static getFilteredSpells(magias: Spell[], term: string) {
+        return magias.filter(
             (spell) =>
                 normalize(spell.descricao).includes(normalize(term)) ||
                 normalize(spell.nome).includes(normalize(term))
@@ -40,5 +40,9 @@ export class Spellbook {
                 .map((desc) => getDescritorName(desc.slug).toLowerCase())
                 .includes(descritor)
         );
+    }
+
+    static FilterSpellsByOrigem(magias: Spell[], origem: string) {
+        return magias.filter((spell) => spell.origem == origem.toLowerCase());
     }
 }

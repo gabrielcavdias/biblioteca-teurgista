@@ -5,7 +5,7 @@ import Personagens from './pages/Personagens';
 import './App.css';
 import { GlobalStorage } from './context/GlobalContext';
 import Footer from './components/Footer';
-import { Spellbook } from './helpers/Spellbook';
+import { FilterStorage } from './context/FilterContext';
 import MagiaSingle from './pages/MagiaSingle';
 import PersonagemSingle from './pages/PersonagemSingle';
 
@@ -13,19 +13,27 @@ const App = () => {
     return (
         <>
             <GlobalStorage>
-                <BrowserRouter>
-                    <Header />
-                    <Routes>
-                        <Route path="/" element={<Magias />} />
-                        <Route path="personagens" element={<Personagens />} />
-                        <Route
-                            path="personagens/:id"
-                            element={<PersonagemSingle />}
-                        />
-                        <Route path="magias/:id" element={<MagiaSingle />} />
-                    </Routes>
-                    <Footer />
-                </BrowserRouter>
+                <FilterStorage>
+                    <BrowserRouter>
+                        <Header />
+                        <Routes>
+                            <Route path="/" element={<Magias />} />
+                            <Route
+                                path="personagens"
+                                element={<Personagens />}
+                            />
+                            <Route
+                                path="personagens/:id"
+                                element={<PersonagemSingle />}
+                            />
+                            <Route
+                                path="magias/:id"
+                                element={<MagiaSingle />}
+                            />
+                        </Routes>
+                        <Footer />
+                    </BrowserRouter>
+                </FilterStorage>
             </GlobalStorage>
         </>
     );

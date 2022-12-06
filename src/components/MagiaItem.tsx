@@ -116,7 +116,7 @@ const MagiaItem = ({ magia, spellSlot, character }: MagiasItemProps) => {
                             )}
                         </button>
                     )}
-                    <Link to={`magias/${magia.id}`} target="_blank">
+                    <Link to={`/magias/${magia.id}`} target="_blank">
                         <i className="fa-solid fa-arrow-up-right-from-square"></i>
                     </Link>
                 </span>
