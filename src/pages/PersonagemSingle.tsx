@@ -32,7 +32,12 @@ const PersonagemSingle = () => {
                                     (spell) => spell.id == magia.spellId
                                 );
                             return (
-                                <MagiaItem key={index} magia={targetMagia} />
+                                <MagiaItem
+                                    key={index}
+                                    magia={targetMagia}
+                                    spellSlot={magia}
+                                    character={targetCharacter}
+                                />
                             );
                         }
                     )}

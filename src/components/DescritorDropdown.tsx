@@ -21,7 +21,7 @@ const DescritorDropdown = () => {
         <div className="cursor-pointer">
             <span className="text-sm text-gray-200">Descritor:</span>
             <div
-                className="relative border-b border-gray-200 py-1 px-2 bg-brand-gray-lighter text-white flex justify-between w-36 items-center"
+                className="relative border-b border-gray-200 py-1 px-2 bg-brand-gray-lighter text-white flex justify-between w-36 items-center rounded"
                 onClick={() => setDropDownOpen(!dropdownOpen)}
             >
                 {strCapitalize(currentDescritor)}{' '}

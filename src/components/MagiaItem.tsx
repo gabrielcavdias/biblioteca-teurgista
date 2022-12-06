@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom';
 import { GlobalContext } from '../context/GlobalContext';
 type MagiasItemProps = {
     magia: Spell;
+    spellSlot?: SpellSlot;
+    character?: TCharacter;
 };
 
-const MagiaItem = ({ magia }: MagiasItemProps) => {
+const MagiaItem = ({ magia, spellSlot, character }: MagiasItemProps) => {
     const { currentMagiaID, setCurrentMagiaID }: any =
         React.useContext(GlobalContext);
     const { characters, setCharacters }: any = React.useContext(GlobalContext);
@@ -42,6 +44,32 @@ const MagiaItem = ({ magia }: MagiasItemProps) => {
             }
         }
     };
+
+    const handleMemorize = () => {
+        const targetSpell = character?.spells.find(
+            (spell) => spell.spellId == magia.id
+        );
+        targetSpell &&
+            (targetSpell.isMemorized
+                ? (targetSpell.memorizedCount += 1)
+                : ((targetSpell.isMemorized = true),
+                  (targetSpell.memorizedCount = 1)));
+        setCharacters([...characters]);
+    };
+
+    const handleForget = (event: any) => {
+        event.preventDefault();
+        const targetSpell = character?.spells.find(
+            (spell) => spell.spellId == magia.id
+        );
+        targetSpell &&
+            (targetSpell.memorizedCount > 1
+                ? (targetSpell.memorizedCount -= 1)
+                : ((targetSpell.isMemorized = false),
+                  (targetSpell.memorizedCount = 0)));
+        setCharacters([...characters]);
+    };
+
     React.useEffect(() => {
         window.localStorage.setItem('personagens', JSON.stringify(characters));
     }, [characters]);
@@ -63,9 +91,29 @@ const MagiaItem = ({ magia }: MagiasItemProps) => {
                     {magia.nome}
                 </span>
                 <span className="inline-flex gap-2 items-center text-2xl pl-2 text-white">
-                    {characters.length > 0 && (
+                    {!spellSlot && (
                         <button onClick={() => handleAddMagia(magia.id)}>
                             <i className={magiaIcon}></i>
+                        </button>
+                    )}
+                    {spellSlot && (
+                        <button
+                            className="relative"
+                            onClick={() => handleMemorize()}
+                            onContextMenu={(event) => handleForget(event)}
+                        >
+                            <i
+                                className={`fa-solid fa-book-open-reader ${
+                                    spellSlot.isMemorized
+                                        ? 'text-violet-500'
+                                        : ''
+                                }`}
+                            ></i>
+                            {spellSlot.memorizedCount > 1 && (
+                                <span className="absolute -translate-x-1/2 left-1/2 top-2 text-lg">
+                                    {spellSlot.memorizedCount}
+                                </span>
+                            )}
                         </button>
                     )}
                     <Link to={`magias/${magia.id}`} target="_blank">

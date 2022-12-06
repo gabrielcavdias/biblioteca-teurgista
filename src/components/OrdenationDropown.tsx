@@ -24,7 +24,7 @@ const OrdenationDropdown = () => {
         <div className="cursor-pointer">
             <span className="text-sm text-gray-200">Ordenar por:</span>
             <div
-                className="relative border-b border-gray-200 py-1 px-2 bg-brand-gray-lighter text-white flex gap-12 items-center"
+                className="relative border-b border-gray-200 py-1 px-2 bg-brand-gray-lighter text-white flex gap-12 items-center rounded"
                 onClick={() => setDropDownOpen(!dropdownOpen)}
             >
                 {currentOrdenation}{' '}
