@@ -13,6 +13,9 @@ export const GlobalStorage = ({ children }: { children: any }) => {
         let localCharacters = window.localStorage.getItem('personagens');
         return localCharacters ? JSON.parse(localCharacters) : [];
     });
+    const [characterSelectOpen, setCharacterSelectOpen] = useState(false);
+    const [currentAddMagia, setCurrentAddMagia] = useState(null);
+    const [currentCharacter, setCurrentCharacter] = useState(null);
 
     return (
         <GlobalContext.Provider
@@ -23,6 +26,12 @@ export const GlobalStorage = ({ children }: { children: any }) => {
                 setSpellList,
                 characters,
                 setCharacters,
+                currentCharacter,
+                setCurrentCharacter,
+                characterSelectOpen,
+                setCharacterSelectOpen,
+                currentAddMagia,
+                setCurrentAddMagia,
             }}
         >
             {children}

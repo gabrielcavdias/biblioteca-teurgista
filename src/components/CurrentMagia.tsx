@@ -12,7 +12,7 @@ const CurrentMagia = () => {
     return (
         <section
             aria-labelledby="curreentMagia__title"
-            className="max-w-2xl min-h-screen mt-2 pt-2 pb-8 px-3 bg-brand-gray-dark rounded-lg"
+            className="max-w-2xl min-h-screen pt-2 pb-8 px-3 bg-brand-gray-dark rounded-lg"
         >
             <div className="mt-4 pl-12">
                 <h2

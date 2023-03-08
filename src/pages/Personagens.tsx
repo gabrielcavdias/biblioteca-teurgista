@@ -11,16 +11,8 @@ const Personagens = () => {
     const [isModalOpen, setModalOpen] = React.useState<boolean>(false);
 
     const handleCharacterCreation = (nome: string) => {
-        if (characters.length == 0) {
-            let newCharacter: TCharacter = new Character(
-                strCapitalize(nome),
-                []
-            );
-            setCharacters([...characters, newCharacter]);
-        } else {
-            window.alert('Múltiplos personagens só no plano premium');
-            window.alert('BRINKS! Mas ainda não dá pra ter vários boneco :(');
-        }
+        let newCharacter: TCharacter = new Character(strCapitalize(nome), []);
+        setCharacters([...characters, newCharacter]);
     };
 
     const deleteCharacter = (character: any) => {

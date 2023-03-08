@@ -13,6 +13,8 @@ const MagiaItem = ({ magia, spellSlot, character }: MagiasItemProps) => {
     const { currentMagiaID, setCurrentMagiaID }: any =
         React.useContext(GlobalContext);
     const { characters, setCharacters }: any = React.useContext(GlobalContext);
+    const { setCharacterSelectOpen, setCurrentAddMagia }: any =
+        React.useContext(GlobalContext);
 
     let magiaIcon =
         magia.origem == 'divina'
@@ -42,6 +44,9 @@ const MagiaItem = ({ magia, spellSlot, character }: MagiasItemProps) => {
                     `${magia.nome} adicionado ao grimório do personagem ${character.name}`
                 );
             }
+        } else {
+            setCurrentAddMagia(id);
+            setCharacterSelectOpen(true);
         }
     };
 
@@ -70,6 +75,14 @@ const MagiaItem = ({ magia, spellSlot, character }: MagiasItemProps) => {
         setCharacters([...characters]);
     };
 
+    const handleRemove = () => {
+        const targetSpellIndex =
+            character?.spells.findIndex((spell) => spell.spellId == magia.id) ||
+            0;
+
+        character?.spells.splice(targetSpellIndex, 1);
+    };
+
     React.useEffect(() => {
         window.localStorage.setItem('personagens', JSON.stringify(characters));
     }, [characters]);
@@ -91,7 +104,7 @@ const MagiaItem = ({ magia, spellSlot, character }: MagiasItemProps) => {
                     {magia.nome}
                 </span>
                 <span className="inline-flex gap-2 items-center text-2xl pl-2 text-white">
-                    {!spellSlot && (
+                    {!spellSlot && characters.length > 0 && (
                         <button onClick={() => handleAddMagia(magia.id)}>
                             <i className={magiaIcon}></i>
                         </button>
@@ -119,6 +132,15 @@ const MagiaItem = ({ magia, spellSlot, character }: MagiasItemProps) => {
                     <Link to={`/magias/${magia.id}`} target="_blank">
                         <i className="fa-solid fa-arrow-up-right-from-square"></i>
                     </Link>
+                    {spellSlot && (
+                        <button
+                            className="text-white hover:text-red-500 transition-all duration-500 font-bold"
+                            onClick={() => handleRemove()}
+                            title={`Remover ${magia.nome} do grimório de ${character?.name}`}
+                        >
+                            <i className="fa-solid fa-square-minus"></i>
+                        </button>
+                    )}
                 </span>
             </span>
         </li>
